@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { SlArrowDown } from "react-icons/sl";
 import data from "../../data/data";
 import { Link, useNavigate, useParams } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const CreateUser = () => {
   const { userId } = useParams();
@@ -77,12 +79,16 @@ const CreateUser = () => {
             : "User data saved successfully"
         );
 
+        notify();
         setName("");
         setselectedSectors([]);
         setAgreeTerms(false);
-        if (userId) {
+        // if (userId) {
+        //   navigate("/users");
+        // }
+        setTimeout(() => {
           navigate("/users");
-        }
+        }, 2000);
       } else {
         console.error(`Failed to ${userId ? "update" : "save"} user data`);
       }
@@ -100,31 +106,39 @@ const CreateUser = () => {
     setIsOpen(false);
   };
 
+  const notify = () =>
+    toast.success(`User ${userId ? "Update" : "Save"} successfully!`, {
+      position: "top-right",
+      autoClose: 2000,
+      hideProgressBar: true,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+    });
+
   return (
-    <div>
-      <Link to="/users">Show User List</Link>
+    <div className="bg-[#edf2fb] min-h-screen pt-32">
+      <ToastContainer />
       <form
-        className="relative w-1/3 rounded-lg m-auto pt-5"
+        className="relative mx-5 md:m-auto p-5 md:w-1/3 space-y-8 rounded-lg  bg-[#abc4ff]"
         onSubmit={handleSubmit}
       >
         <div className="mb-4">
-          <label
-            htmlFor="name"
-            className="block text-sm font-medium text-gray-700"
-          >
-            Name
-          </label>
           <input
             type="text"
-            id="name"
             name="name"
+            placeholder="Name"
             value={name}
             onChange={(e) => setName(e.target.value)}
-            className="mt-1 p-2 w-full border rounded-md"
+            className="py-5 px-5 w-full border outline-none rounded-md text-xl"
             required
           />
         </div>
-        <div className="flex flex-wrap items-center py-5 max-h-[80px] overflow-auto p-2 space-y-2 border rounded-t-lg cursor-text relative">
+        <div
+          className={`flex flex-wrap items-center p-5 min-h-[150px] overflow-auto space-y-2 border cursor-text relative bg-white ${
+            isOpen ? "rounded-t-lg" : "rounded-lg"
+          }`}
+        >
           {selectedSectors.length > 0
             ? selectedSectors.map((item) => (
                 <div key={item} className="mr-2">
@@ -140,17 +154,21 @@ const CreateUser = () => {
                 </div>
               ))
             : null}
-          <div className="text-gray-500 flex">
+          <div className="text-gray-500">
             <p
-              className={!selectedSectors.length && !isOpen ? "" : "invisible"}
+              className={
+                !selectedSectors.length && !isOpen ? "text-xl" : "invisible"
+              }
             >
-              Select sectors in which you are currently involved...
+              Select your current sectors of involvement
             </p>
-            <SlArrowDown
-              className="font-extrabold  self-center ml-10 cursor-pointer bg-red-800 p-2  text-white absolute right-0 top-0"
-              onClick={handleArrowClick}
-              size="40"
-            />
+            <div className="">
+              <SlArrowDown
+                className="self-center cursor-pointer bg-[#2196f3] w-20 px-5 text-white absolute right-0 top-0 rounded-bl-lg"
+                onClick={handleArrowClick}
+                size="30"
+              />
+            </div>
           </div>
         </div>
         {isOpen && (
@@ -184,22 +202,26 @@ const CreateUser = () => {
           <label className="flex items-center">
             <input
               type="checkbox"
-              className=""
+              className="w-5 h-5"
               checked={agreeTerms}
               onChange={() => setAgreeTerms(!agreeTerms)}
               required
             />
-            <span className="ml-2 text-sm">
+            <span className="ml-2 text-base">
               I agree to the terms and conditions
             </span>
           </label>
         </div>
         <button
           type="submit"
-          className="bg-blue-500 text-white px-4 py-2 rounded"
+          className={`py-4 rounded w-full text-xl font-bold tracking-widest cursor-pointer transition-all ease-in-out ${
+            !name || !agreeTerms || selectedSectors.length <= 0
+              ? "bg-[#c1d3fe] text-gray-700 cursor-not-allowed"
+              : "bg-[#2196f3] text-white hover:bg-blue-600"
+          }`}
           disabled={!name || !agreeTerms || selectedSectors.length <= 0}
         >
-          {userId ? "Update" : "Save"}
+          {userId ? "UPDATE" : "SAVE"}
         </button>
       </form>
     </div>

@@ -2,4 +2,22 @@
 @tailwind components;
 @tailwind utilities;
 
+/* For Webkit browsers (Chrome, Safari) */
+::-webkit-scrollbar {
+  width: 2px;
+}
 
+::-webkit-scrollbar-thumb {
+  background-color: #03045e;
+  border-radius: 2px;
+}
+
+/* For Firefox */
+::-moz-scrollbar {
+  width: 2px;
+}
+
+::-moz-scrollbar-thumb {
+  background-color: #0077b6;
+  border-radius: 2px;
+}
