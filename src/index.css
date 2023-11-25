@@ -5,6 +5,7 @@
 /* For Webkit browsers (Chrome, Safari) */
 ::-webkit-scrollbar {
   width: 2px;
+  height: 2px;
 }
 
 ::-webkit-scrollbar-thumb {
@@ -15,6 +16,7 @@
 /* For Firefox */
 ::-moz-scrollbar {
   width: 2px;
+  height: 2px;
 }
 
 ::-moz-scrollbar-thumb {
