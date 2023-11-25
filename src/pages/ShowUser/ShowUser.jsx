@@ -69,7 +69,7 @@ const ShowUser = () => {
     <div className="px-5 text-center bg-[#edf2fb] min-h-screen pt-28">
       <h1 className="text-2xl font-bold mb-4 py-5">User List</h1>
       <ToastContainer />
-      <table className="w-full border">
+      <table className="w-full border mb-20">
         <thead>
           <tr>
             <th className="border p-2">Name</th>
@@ -105,6 +105,13 @@ const ShowUser = () => {
           ))}
         </tbody>
       </table>
+
+      <Link
+        to="/"
+        className={`py-3 px-10 rounded text-xl font-bold tracking-wider cursor-pointer transition-all ease-in-out bg-[#2196f3] text-white hover:bg-blue-600`}
+      >
+        Add More Data
+      </Link>
     </div>
   );
 };
